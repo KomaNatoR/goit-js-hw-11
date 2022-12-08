@@ -1,6 +1,8 @@
 import { fetchApi } from './js/api';
 import { cardTemplate } from './js/templates';
 import Notiflix from 'notiflix';
+import SimpleLightbox from "simplelightbox";
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const refs = {
     searchForm: document.querySelector('.search-form'),
@@ -19,7 +21,6 @@ function onSearch(e) {
     searchQuery = e.currentTarget.elements.searchQuery.value;
     if (searchQuery.trim().length === 0) return Notiflix.Notify.failure('Sorry, input some data!');
 
-    refs.loadmoreBtn.classList.remove('is-hidden');
     page = 1;
     refs.galegyEl.innerHTML = "";
     fetchApi(searchQuery,page).then(renderingCard);
@@ -36,6 +37,10 @@ function renderingCard(data) {
     const cardsTemplate = data.hits.map(card => cardTemplate(card));
     refs.galegyEl.insertAdjacentHTML('beforeend', cardsTemplate.join(''));
 
+    refs.loadmoreBtn.classList.remove('is-hidden');
+    const lightbox = new SimpleLightbox('.simplelightbox', {
+        captionDelay: '250',
+    });
 
     console.log(data);
     console.log(data.hits);

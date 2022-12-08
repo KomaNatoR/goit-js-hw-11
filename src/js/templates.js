@@ -1,6 +1,10 @@
-export const cardTemplate = ({webformatURL,tags,likes,views,comments,downloads}) => `
+export const cardTemplate = ({largeImageURL,webformatURL,tags,likes,views,comments,downloads}) => `
+    
     <div class="photo-card">
-        <img src="${webformatURL}" alt="${tags}" loading="lazy" width="320" />
+        <a class="simplelightbox" href="${largeImageURL}">
+            <img src="${webformatURL}" alt="${tags}" loading="lazy" />
+        </a>
+
         <div class="info">
             <ul class="list">    
                 <li class="info-item">
