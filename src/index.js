@@ -5,25 +5,43 @@ import Notiflix from 'notiflix';
 const refs = {
     searchForm: document.querySelector('.search-form'),
     galegyEl: document.querySelector('.gallery'),
+    loadmoreBtn: document.querySelector('.load-more'),
+    pEl: document.querySelector('.end_of_colection'),
 };
 refs.searchForm.addEventListener('submit', onSearch);
+refs.loadmoreBtn.addEventListener('click', onLoadmore);
+
+let searchQuery = '';
+let page = 1;
 
 function onSearch(e) {
     e.preventDefault();
-    const searchQuery = e.currentTarget.elements.searchQuery.value;
-    if (searchQuery.trim().length === 0) {
-       return refs.galegyEl.innerHTML = "";
-    };
+    searchQuery = e.currentTarget.elements.searchQuery.value;
+    if (searchQuery.trim().length === 0) return Notiflix.Notify.failure('Sorry, input some data!');
 
-    console.dir(searchQuery);
-    fetchApi(searchQuery).then(renderingCard);
+    refs.loadmoreBtn.classList.remove('is-hidden');
+    page = 1;
+    refs.galegyEl.innerHTML = "";
+    fetchApi(searchQuery,page).then(renderingCard);
 };
 
 
 function renderingCard(data) {
-    if (data.length === 0) return Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
-    // console.log(data.hits[0]);
-    const cardsTemplate = data.hits.map(card => cardTemplate(card));
+    if (data.hits.length === 0) return Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
+    // if (data.hits===500) {
+    //     refs.loadmoreBtn.classList.add('is-hidden');
+    //     refs.pEl.classList.remove('is-hidden');
+    // };
 
-    refs.galegyEl.innerHTML = cardsTemplate.join('');
+    const cardsTemplate = data.hits.map(card => cardTemplate(card));
+    refs.galegyEl.insertAdjacentHTML('beforeend', cardsTemplate.join(''));
+
+
+    console.log(data);
+    console.log(data.hits);
+};
+
+function onLoadmore(e) {
+    page += 1;
+    fetchApi(searchQuery,page).then(renderingCard);
 };

@@ -4,6 +4,30 @@
 
   background-color: orange;
 }
-.info {
-  display: flex;
+.photo-card{
+  width: calc((100% - 90px) / 6);
+
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 2px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 0px 0px 4px 4px;
 }
+.list {
+  display: flex;
+  list-style: none;
+  gap: 10px;
+
+  padding: 10px;
+  margin: 0;
+}
+.gallery{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.info-item{
+  padding: 0;
+}
+  .is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }

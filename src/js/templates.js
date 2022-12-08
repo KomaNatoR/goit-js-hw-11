@@ -1,22 +1,24 @@
 export const cardTemplate = ({webformatURL,tags,likes,views,comments,downloads}) => `
     <div class="photo-card">
-        <img src="${webformatURL}" alt="${tags}" loading="lazy" />
+        <img src="${webformatURL}" alt="${tags}" loading="lazy" width="320" />
         <div class="info">
-            <p class="info-item">
-                <b>Likes</b>
-                <b>${likes}</b>
-            </p>
-            <p class="info-item">
-                <b>Views</b>
-                <b>${views}</b>
-            </p>
-            <p class="info-item">
-                <b>Comments</b>
-                <b>${comments}</b>
-            </p>
-            <p class="info-item">
-                <b>Downloads</b>
-                <b>${downloads}</b>
-            </p>
+            <ul class="list">    
+                <li class="info-item">
+                    <p><b>Likes</b></p>
+                    <p>${likes}</p>
+                </li>
+                <li class="info-item">
+                    <p><b>Views</b></p>
+                    <p>${views}</p>
+                </li>
+                <li class="info-item">
+                    <p><b>Comments</b></p>
+                    <p>${comments}</p>
+                </li>
+                <li class="info-item">
+                    <p><b>Downloads</b></p>
+                    <p>${downloads}</p>
+                </li>
+            </ul>
         </div>
     </div>`;
