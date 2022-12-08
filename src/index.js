@@ -24,13 +24,13 @@ function onSearch(e) {
 
     page = 1;
     refs.galegyEl.innerHTML = "";
-    fetchApi(searchQuery,page,per_page).then(renderingCard);
+    fetchApi(searchQuery,page,per_page).then(renderingCard).catch(error);
 };
 
 
 function renderingCard(data) {
     if (data.hits.length === 0) return Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
-    if (data.totalHits<=200*page) {
+    if (data.totalHits<=per_page*page) {
         refs.loadmoreBtn.classList.add('is-hidden');
         refs.pEl.classList.remove('is-hidden');
         return;
@@ -53,3 +53,6 @@ function onLoadmore(e) {
     page += 1;
     fetchApi(searchQuery,page,per_page).then(renderingCard);
 };
+function error(er) {
+    return Notiflix.Notify.failure('Sorry we cant load pictures. Try again!');
+}
