@@ -15,6 +15,7 @@ refs.loadmoreBtn.addEventListener('click', onLoadmore);
 
 let searchQuery = '';
 let page = 1;
+let per_page = 20;
 
 function onSearch(e) {
     e.preventDefault();
@@ -23,16 +24,17 @@ function onSearch(e) {
 
     page = 1;
     refs.galegyEl.innerHTML = "";
-    fetchApi(searchQuery,page).then(renderingCard);
+    fetchApi(searchQuery,page,per_page).then(renderingCard);
 };
 
 
 function renderingCard(data) {
     if (data.hits.length === 0) return Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
-    // if (data.hits===500) {
-    //     refs.loadmoreBtn.classList.add('is-hidden');
-    //     refs.pEl.classList.remove('is-hidden');
-    // };
+    if (data.totalHits<=200*page) {
+        refs.loadmoreBtn.classList.add('is-hidden');
+        refs.pEl.classList.remove('is-hidden');
+        return;
+    };
 
     const cardsTemplate = data.hits.map(card => cardTemplate(card));
     refs.galegyEl.insertAdjacentHTML('beforeend', cardsTemplate.join(''));
@@ -43,10 +45,11 @@ function renderingCard(data) {
     });
 
     console.log(data);
-    console.log(data.hits);
+    console.log(data.totalHits);
+    console.log(data.totalHits<=per_page*page);
 };
 
-function onLoadmore(e) {
+function onLoadmore(e) {    
     page += 1;
-    fetchApi(searchQuery,page).then(renderingCard);
+    fetchApi(searchQuery,page,per_page).then(renderingCard);
 };
